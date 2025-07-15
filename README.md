@@ -16,7 +16,7 @@ This is a 10-part code-along project to build a console-based school attendance 
 ## 📁 Project Structure
 AttendanceSystem/
 ├── src/
-│ └── com/
-│ └── school/
-│ └── Main.java
+│   └── com/
+│       └── school/
+│           └── Main.java
 ├── README.md
