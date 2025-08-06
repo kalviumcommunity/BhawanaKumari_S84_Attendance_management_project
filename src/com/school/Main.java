@@ -2,33 +2,22 @@ package com.school;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Welcome to the School Attendance System Project!");
-        System.out.println("Session 2: Core Domain Modelling\n");
+        Student student1 = new Student("Alice");
+        Student student2 = new Student("Bob");
+        Student student3 = new Student("Charlie");
 
-        System.out.println("---- School Attendance System ----\n");
+        Course course1 = new Course("Mathematics");
+        Course course2 = new Course("Science");
+        Course course3 = new Course("English");
 
-        // Create student objects
-        Student[] students = new Student[2];
-        students[0] = new Student(1, "Alice Wonderland");
-        students[1] = new Student(2, "Bob The Builder");
+        System.out.println("\nStudent Details:");
+        student1.displayDetails();
+        student2.displayDetails();
+        student3.displayDetails();
 
-        // Create course objects
-        Course[] courses = new Course[2];
-        courses[0] = new Course("CS101", "Intro to Programming");
-        courses[1] = new Course("MA202", "Linear Algebra");
-
-        // Display students
-        System.out.println("Registered Students:");
-        for (Student s : students) {
-            s.displayStudentInfo();
-        }
-
-        // Display courses
-        System.out.println("\nAvailable Courses:");
-        for (Course c : courses) {
-            c.displayCourseInfo();
-        }
-
-        System.out.println("\nSession 2: Core Domain Modelling Complete.");
+        System.out.println("\nCourse Details:");
+        course1.displayDetails();
+        course2.displayDetails();
+        course3.displayDetails();
     }
 }
