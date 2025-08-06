@@ -1,16 +1,17 @@
 package com.school;
 
 public class Course {
-    private String courseId;
+    private static int nextCourseIdCounter = 101;
+    private int courseId;
     private String courseName;
 
-    //  Add this constructor to match Main.java
-    public Course(String courseId, String courseName) {
-        this.courseId = courseId;
+    public Course(String courseName) {
+        this.courseId = nextCourseIdCounter++;
         this.courseName = courseName;
     }
 
-    public void displayCourseInfo() {
-        System.out.println("Course ID: " + courseId + ", Name: " + courseName);
+    public void displayDetails() {
+        System.out.println("Course ID: C" + courseId);
+        System.out.println("Course Name: " + courseName);
     }
 }
