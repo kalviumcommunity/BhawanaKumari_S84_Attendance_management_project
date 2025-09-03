@@ -11,7 +11,7 @@ public class Main {
         Student student1 = new Student("Alice Wonderland", "Grade 10");
         Student student2 = new Student("Bob The Builder", "Grade 9");
 
-        // Create Teacher and Staff (as per Part 5)
+        // Create Teacher and Staff (from Part 5)
         Teacher teacher = new Teacher("Mr. Smith", "Mathematics");
         Staff staff = new Staff("Janet", "Administrator");
 
@@ -54,6 +54,25 @@ public class Main {
             record.displayRecord();
         }
 
-        System.out.println("\nPart 5: Inheritance Hierarchy and Attendance Recording Complete.");
+        // === Part 6: Saving Data to Files ===
+        System.out.println("\n=== Saving Data to Files ===");
+
+        // Wrap students and courses in ArrayLists (needed for FileStorageService)
+        ArrayList<Student> students = new ArrayList<>();
+        students.add(student1);
+        students.add(student2);
+
+        ArrayList<Course> courses = new ArrayList<>();
+        courses.add(course1);
+
+        ArrayList<AttendanceRecord> records = new ArrayList<>(attendanceLog);
+
+        // Save data using FileStorageService
+        FileStorageService storage = new FileStorageService();
+        storage.saveData(students, "students.txt");
+        storage.saveData(courses, "courses.txt");
+        storage.saveData(records, "attendance_log.txt");
+
+        System.out.println("\nPart 6: Data saved to files successfully.");
     }
 }
