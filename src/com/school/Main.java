@@ -1,78 +1,89 @@
+
+
+
 package com.school;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("=== School Attendance System ===");
 
-        // Create Students
+    // Helper method to demonstrate polymorphism with Person objects
+    public static void displaySchoolDirectory(List<Person> people) {
+        System.out.println("\n--- School Directory ---");
+        if (people.isEmpty()) {
+            System.out.println("No people in the directory.");
+            return;
+        }
+        for (Person person : people) {
+            person.displayDetails(); // Polymorphic call
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("--- School Administration & Attendance System (Polymorphism Demo) ---");
+
+        // --- Data Setup ---
         Student student1 = new Student("Alice Wonderland", "Grade 10");
         Student student2 = new Student("Bob The Builder", "Grade 9");
+        Teacher teacher1 = new Teacher("Dr. Emily Carter", "Physics");
+        Staff staff1 = new Staff("Mr. John Davis", "Librarian");
 
-        // Create Teacher and Staff (from Part 5)
-        Teacher teacher = new Teacher("Mr. Smith", "Mathematics");
-        Staff staff = new Staff("Janet", "Administrator");
+        List<Person> schoolPeople = new ArrayList<>();
+        schoolPeople.add(student1);
+        schoolPeople.add(student2);
+        schoolPeople.add(teacher1);
+        schoolPeople.add(staff1);
 
-        // Display Registered People
-        System.out.println("\nRegistered Students:");
-        student1.displayDetails();
-        student2.displayDetails();
+        // Demonstrate polymorphic call through a helper method
+        displaySchoolDirectory(schoolPeople);
 
-        System.out.println("\nRegistered Teacher:");
-        teacher.displayDetails();
+        // --- Course Setup ---
+        Course course1 = new Course("Intro to Quantum Physics");
+        Course course2 = new Course("Advanced Algorithms");
+        List<Course> courses = new ArrayList<>();
+        courses.add(course1);
+        courses.add(course2);
 
-        System.out.println("\nRegistered Staff:");
-        staff.displayDetails();
+        System.out.println("\n\n--- Available Courses ---");
+        for(Course c : courses) c.displayDetails();
 
-        // Create Courses
-        Course course1 = new Course("Intro to Programming");
 
-        System.out.println("\nAvailable Courses:");
-        course1.displayDetails();
-
-        // Attendance Recording
-        System.out.println("\n=== Attendance Recording ===");
+        // --- Attendance Recording (Using Student and Course objects) ---
         List<AttendanceRecord> attendanceLog = new ArrayList<>();
+        attendanceLog.add(new AttendanceRecord(student1, course1, "Present"));
+        attendanceLog.add(new AttendanceRecord(student2, course1, "Absent"));
+        attendanceLog.add(new AttendanceRecord(student1, course2, "Daydreaming")); // Invalid status
 
-        // Record valid attendance
-        AttendanceRecord record1 = new AttendanceRecord(student1.getId(), course1.getCourseId(), "Present");
-        attendanceLog.add(record1);
-
-        // Attempt to record invalid attendance status
-        AttendanceRecord record2 = new AttendanceRecord(student2.getId(), course1.getCourseId(), "Late");
-        attendanceLog.add(record2);
-
-        // Record another valid attendance
-        AttendanceRecord record3 = new AttendanceRecord(student2.getId(), course1.getCourseId(), "Absent");
-        attendanceLog.add(record3);
-
-        // Display Attendance Log
-        System.out.println("\n=== Attendance Log ===");
-        for (AttendanceRecord record : attendanceLog) {
-            record.displayRecord();
+        System.out.println("\n\n--- Attendance Log ---");
+        if (attendanceLog.isEmpty()){
+            System.out.println("No attendance records yet.");
+        } else {
+            for (AttendanceRecord ar : attendanceLog) {
+                ar.displayRecord(); // displayRecord now uses Student/Course objects
+            }
         }
 
-        // === Part 6: Saving Data to Files ===
-        System.out.println("\n=== Saving Data to Files ===");
+        // --- Saving Data (Storable interface still uses IDs for simplicity) ---
+        System.out.println("\n\n--- Saving Data to Files ---");
+        FileStorageService storageService = new FileStorageService();
+        // We need to convert List<Person> to List<Student> or handle saving different person types.
+        // For simplicity, let's save only students from the schoolPeople list if they are students.
+        List<Student> studentsToSave = new ArrayList<>();
+        for(Person p : schoolPeople){
+            if(p instanceof Student){
+                studentsToSave.add((Student) p);
+            }
+        }
+        if(!studentsToSave.isEmpty()){
+            storageService.saveData(studentsToSave, "students.txt");
+        } else {
+             System.out.println("No student data to save from school directory.");
+        }
 
-        // Wrap students and courses in ArrayLists (needed for FileStorageService)
-        ArrayList<Student> students = new ArrayList<>();
-        students.add(student1);
-        students.add(student2);
+        storageService.saveData(courses, "courses.txt");
+        storageService.saveData(attendanceLog, "attendance_log.txt");
 
-        ArrayList<Course> courses = new ArrayList<>();
-        courses.add(course1);
-
-        ArrayList<AttendanceRecord> records = new ArrayList<>(attendanceLog);
-
-        // Save data using FileStorageService
-        FileStorageService storage = new FileStorageService();
-        storage.saveData(students, "students.txt");
-        storage.saveData(courses, "courses.txt");
-        storage.saveData(records, "attendance_log.txt");
-
-        System.out.println("\nPart 6: Data saved to files successfully.");
+        System.out.println("\nSession 7: Polymorphic Behaviour Demonstrated Complete.");
     }
 }
