@@ -6,9 +6,21 @@ public class Course implements Storable {
     private int courseId;
     private String courseName;
 
+    // Constructor for new courses (auto-generates ID)
     public Course(String courseName) {
         this.courseId = nextCourseIdCounter++;
         this.courseName = courseName;
+    }
+
+    // ✅ Added constructor for loading existing courses (fixes constructor undefined error)
+    public Course(int courseId, String courseName) {
+        this.courseId = courseId;
+        this.courseName = courseName;
+
+        // Keep ID counter in sync so future courses don’t duplicate IDs
+        if (courseId >= nextCourseIdCounter) {
+            nextCourseIdCounter = courseId + 1;
+        }
     }
 
     // Getter for courseId
@@ -25,7 +37,6 @@ public class Course implements Storable {
         System.out.println("Course ID: " + this.courseId + ", Name: " + this.courseName);
     }
 
-    // Implementation of Storable interface
     @Override
     public String toDataString() {
         return courseId + "," + courseName;
