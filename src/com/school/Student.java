@@ -1,23 +1,19 @@
 package com.school;
 
 public class Student extends Person implements Storable {
-    private String gradeLevel;
+    private String email;
 
-    // Student constructor matches Person(String name)
-    public Student(String name, String gradeLevel) {
-        super(name); // Person assigns numeric ID automatically
-        this.gradeLevel = gradeLevel;
+    public Student(String name, String email) {
+        super(name);
+        this.email = email;
     }
 
-    @Override
-    public void displayDetails() {
-        super.displayDetails();
-        System.out.println("Grade Level: " + this.gradeLevel);
-        System.out.println("Role: Student");
+    public String getEmail() {
+        return email;
     }
 
     @Override
     public String toDataString() {
-        return getId() + "," + getName() + "," + gradeLevel;
+        return id + "," + name + "," + email;
     }
 }
