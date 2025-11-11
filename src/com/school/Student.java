@@ -1,17 +1,19 @@
 package com.school;
 
-public class Student extends Person {
-    private String gradeLevel;
+public class Student extends Person implements Storable {
+    private String email;
 
-    public Student(String name, String gradeLevel) {
-        super(name); // Calls the constructor of Person
-        this.gradeLevel = gradeLevel;
+    public Student(String name, String email) {
+        super(name);
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override
-    public void displayDetails() {
-        super.displayDetails(); // Displays ID and name
-        System.out.println("Grade Level: " + this.gradeLevel);
-        System.out.println("Role: Student");
+    public String toDataString() {
+        return id + "," + name + "," + email;
     }
 }
