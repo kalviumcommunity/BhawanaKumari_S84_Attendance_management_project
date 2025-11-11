@@ -17,8 +17,10 @@ public class Person {
         this.name = name;
 
         // Ensure next ID stays ahead (avoid duplicate IDs later)
-        if (id >= nextIdCounter) {
-            nextIdCounter = id + 1;
+        synchronized (Person.class) {
+            if (id >= nextIdCounter) {
+                nextIdCounter = id + 1;
+            }
         }
     }
 
